@@ -12,3 +12,9 @@
 
 (defn get-tweeters []
   (coll/find-maps "tweeter"))
+
+(defn add-event [event]
+  (coll/insert "event" event))
+
+(defn add-tweeter [tweeter]
+  (coll/insert "tweeter" tweeter))
