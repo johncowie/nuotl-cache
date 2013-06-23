@@ -5,13 +5,16 @@
               [ring.middleware.json :refer [wrap-json-body wrap-json-response]]
               [compojure.core :refer [GET ANY defroutes]]
               [compojure.handler :refer [site]]
+              [nuotl-cache.db :as db]
               )
     (:gen-class))
 
+(db/get-events)
+
 (defroutes app-routes
-  (GET "/" [] (response {:message "Hello World!!"}))
-  (ANY "*" [] (response {:message "Anything else"}))
-  )
+  (GET "/events" [] (response (db/get-events)))
+  (GET "/tweeter" [] (response (db/get-tweeters)))
+  (ANY "*" [] (response {:message "404"})))
 
 (def app
   (->
