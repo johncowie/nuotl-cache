@@ -2,19 +2,15 @@
   (:require [monger.core :as core]
             [monger.collection :as coll]
             [monger.joda-time]
+            [monger.operators :refer [$gte $lt]]
+            [clj-time.core :refer [date-time plus months year month]]
             ))
 
-(core/connect!)
-(core/set-db! (core/get-db "nuotl"))
+(defn connect-to-db [config]
+  (core/connect! {:host ((config :mongo) :host) :port ((config :mongo) :port)})
+  (core/set-db! (core/get-db ((config :mongo) :database))))
 
-(defn get-events []
-  (coll/find-maps "event"))
-
-(defn get-tweeters []
-  (coll/find-maps "tweeter"))
-
-(defn add-event [event]
-  (coll/insert "event" event))
-
-(defn add-tweeter [tweeter]
-  (coll/insert "tweeter" tweeter))
+(defn get-events [year month]
+  (let [start-date (date-time year month)
+        end-date (plus start-date (months 1))]
+    (coll/find-maps "event" {:start {$gte start-date $lt end-date}})))

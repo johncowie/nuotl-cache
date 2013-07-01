@@ -6,26 +6,23 @@
               [compojure.core :refer [GET ANY POST defroutes]]
               [compojure.handler :refer [site]]
               [nuotl-cache.db :as db]
+              [clj-yaml.core :as yaml]
               )
     (:gen-class))
 
-(db/get-events)
-
 (defroutes app-routes
-  (GET "/events" [] (response (db/get-events)))
-  (GET "/tweeter" [] (response (db/get-tweeters)))
-  (POST "/event" {body :body} (db/add-event body))
-  (POST "/tweeter" {body :body} (db/add-tweeter body))
+  (GET "/events/:year/:month" [year month] (response (db/get-events
+                                                        (read-string year)
+                                                        (read-string month))))
   (ANY "*" [] (response {:message "404"})))
 
 (def app
   (->
    (site app-routes)
    (wrap-json-body {:keywords? true})
-   (wrap-json-response)
-   ))
+   (wrap-json-response)))
 
 (defn -main [& args]
-  (if (not (empty? args))
-    (jetty/run-jetty app {:port (read-string (first args))})
-    (jetty/run-jetty app {:port 3000})))
+  (let [config (yaml/parse-string (slurp (nth args 0)))]
+    (db/connect-to-db config)
+    (jetty/run-jetty app {:port ((config :http) :port)})))

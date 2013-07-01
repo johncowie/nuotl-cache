@@ -9,7 +9,10 @@
                  [ring/ring-jetty-adapter "1.1.4"]
                  [ring/ring-json "0.2.0"]
                  [org.clojure/tools.logging "0.2.3"]
-                 [midje "1.4.0"]]
+                 [midje "1.4.0"]
+                 [clj-yaml "0.4.0"]]
+  :main nuotl-cache.index
+  :resource-paths ["resources"]
   :plugins [[lein-ring "0.8.5"]]
   :ring {:handler nuotl-cache.index/app}
   :profiles
