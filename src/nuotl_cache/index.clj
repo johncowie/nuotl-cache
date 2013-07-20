@@ -11,7 +11,7 @@
     (:gen-class))
 
 (def areas
-  (read-string (slurp (clojure.java.io/input-stream "resources/areas.edn"))))
+  (read-string (slurp (clojure.java.io/resource "areas.edn"))))
 
 (defroutes app-routes
   (GET "/events/:year/:month" [year month] (response (db/get-events

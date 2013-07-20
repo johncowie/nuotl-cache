@@ -11,7 +11,7 @@
   <scm>
     <connection>scm:git:git://github.com/johncowie/nuotl-cache.git</connection>
     <developerConnection>scm:git:ssh://git@github.com/johncowie/nuotl-cache.git</developerConnection>
-    <tag>f8ee1aa4977a96483cd696636eb1c27a517aa4e5</tag>
+    <tag>ef2a4bd33ef7169e1b5c47175d550838b25df750</tag>
     <url>https://github.com/johncowie/nuotl-cache</url>
   </scm>
   <build>
