@@ -10,10 +10,17 @@
               )
     (:gen-class))
 
+(def areas
+  (read-string (slurp (clojure.java.io/input-stream "resources/areas.edn"))))
+
 (defroutes app-routes
   (GET "/events/:year/:month" [year month] (response (db/get-events
                                                         (read-string year)
                                                         (read-string month))))
+  (GET "/tweeters" [] (response (db/get-tweeters)))
+  (GET "/areas" [] (response areas))
+  (POST "/events" {body :body} (db/add-event body))
+  (POST "/tweeters" {body :body} (db/add-tweeter body))
   (ANY "*" [] (response {:message "404"})))
 
 (def app

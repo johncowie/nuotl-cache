@@ -1,0 +1,6 @@
+http:
+  port: 40000
+mongo:
+  host: localhost
+  port: 27017
+  database: nuotl-acceptance

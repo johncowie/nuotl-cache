@@ -11,7 +11,7 @@
   <scm>
     <connection>scm:git:git://github.com/johncowie/nuotl-cache.git</connection>
     <developerConnection>scm:git:ssh://git@github.com/johncowie/nuotl-cache.git</developerConnection>
-    <tag>4aa0cb974e9dfc070fee428f92ea3db3c0aee422</tag>
+    <tag>f8ee1aa4977a96483cd696636eb1c27a517aa4e5</tag>
     <url>https://github.com/johncowie/nuotl-cache</url>
   </scm>
   <build>
@@ -21,9 +21,6 @@
       <resource>
         <directory>resources</directory>
       </resource>
-      <resource>
-        <directory>config</directory>
-      </resource>
     </resources>
     <testResources>
       <testResource>
@@ -31,9 +28,6 @@
       </testResource>
       <testResource>
         <directory>resources</directory>
-      </testResource>
-      <testResource>
-        <directory>config</directory>
       </testResource>
     </testResources>
     <directory>target</directory>
