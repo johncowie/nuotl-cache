@@ -9,6 +9,7 @@
                  [ring/ring-jetty-adapter "1.1.4"]
                  [ring/ring-json "0.2.0"]
                  [org.clojure/tools.logging "0.2.3"]
+                 [log4j/log4j "1.2.17"]
                  [midje "1.4.0"]
                  [clj-yaml "0.4.0"]]
   :main nuotl-cache.index

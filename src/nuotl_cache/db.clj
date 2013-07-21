@@ -1,17 +1,17 @@
 (ns nuotl-cache.db
   (:require [monger.core :as core]
             [monger.collection :as coll]
-            [monger.joda-time]
+            [monger.joda-time] ; joda-time integration
+            [monger.json]      ; cheshire integration
             [monger.operators :refer [$gte $lt]]
             [clj-time.core :refer [date-time plus months year month]]
+            [clj-time.format :refer [parse]]
+            [clojure.tools.logging :refer [debug]]
   ))
 
 (defn connect-to-db [config]
   (core/connect! {:host ((config :mongo) :host) :port ((config :mongo) :port)})
   (core/set-db! (core/get-db ((config :mongo) :database))))
-
-;(core/connect!)
-;(core/set-db! (core/get-db "nuotl"))
 
 (defn get-events [year month]
   (let [start-date (date-time year month)
@@ -27,7 +27,7 @@
   (coll/find-maps "area"))
 
 (defn add-event [event]
-  (coll/save "event" event))
-
-(defn add-tweeter [tweeter]
-  (coll/save "tweeter" tweeter))
+  (debug (str "Adding event " event))
+  (coll/save "event"
+             (merge event {:start (parse (event :start)) :end (parse (event :end))}))
+  event)

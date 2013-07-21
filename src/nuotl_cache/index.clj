@@ -20,7 +20,6 @@
   (GET "/tweeters" [] (response (db/get-tweeters)))
   (GET "/areas" [] (response areas))
   (POST "/events" {body :body} (db/add-event body))
-  (POST "/tweeters" {body :body} (db/add-tweeter body))
   (ANY "*" [] (response {:message "404"})))
 
 (def app
