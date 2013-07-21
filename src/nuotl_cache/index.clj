@@ -18,6 +18,7 @@
                                                         (read-string year)
                                                         (read-string month))))
   (GET "/tweeters" [] (response (db/get-tweeters)))
+  (POST "/tweeters" {body :body} (db/add-or-update-tweeter body))
   (GET "/areas" [] (response areas))
   (POST "/events" {body :body} (db/add-event body))
   (ANY "*" [] (response {:message "404"})))

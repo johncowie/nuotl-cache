@@ -31,3 +31,9 @@
   (coll/save "event"
              (merge event {:start (parse (event :start)) :end (parse (event :end))}))
   event)
+
+(defn add-or-update-tweeter [tweeter]
+  (debug (str "Adding/updating tweeter: " tweeter))
+  (coll/update "tweeter" (select-keys tweeter [:_id]) tweeter :upsert true)
+  tweeter
+  )
