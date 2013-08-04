@@ -21,7 +21,7 @@
                   (fn [event] (assoc event :tweeter (coll/find-one-as-map "tweeter" {:_id (:tweeter event)})))
                   (coll/find-maps "event" {:start {$gte start-date $lt end-date}}))]
     (debug (format "Retrieving events for %s/%s: " year month))
-    (to-month events year month)
+    events
     ))
 
 (defn remove-event [id]
