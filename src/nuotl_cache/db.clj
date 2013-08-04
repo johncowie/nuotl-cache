@@ -7,6 +7,7 @@
             [clj-time.core :refer [date-time plus months year month]]
             [clj-time.format :refer [parse]]
             [clojure.tools.logging :refer [debug]]
+            [nuotl-cache.event :refer [to-month]]
   ))
 
 (defn connect-to-db [config]
@@ -20,7 +21,7 @@
                   (fn [event] (assoc event :tweeter (coll/find-one-as-map "tweeter" {:_id (:tweeter event)})))
                   (coll/find-maps "event" {:start {$gte start-date $lt end-date}}))]
     (debug (format "Retrieving events for %s/%s: " year month))
-    events
+    (to-month events year month)
     ))
 
 (defn remove-event [id]
