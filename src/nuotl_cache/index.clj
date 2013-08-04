@@ -3,7 +3,7 @@
               [ring.adapter.jetty :as jetty]
               [ring.util.response :refer [response]]
               [ring.middleware.json :refer [wrap-json-body wrap-json-response]]
-              [compojure.core :refer [GET ANY POST defroutes]]
+              [compojure.core :refer [GET ANY POST DELETE defroutes]]
               [compojure.handler :refer [site]]
               [nuotl-cache.db :as db]
               [clj-yaml.core :as yaml]
@@ -18,9 +18,14 @@
                                                         (read-string year)
                                                         (read-string month))))
   (GET "/tweeters" [] (response (db/get-tweeters)))
-  (POST "/tweeters" {body :body} (db/add-or-update-tweeter body))
+  (GET "/tweeters/:id" [id] (response (db/get-tweeter id)))
+  (POST "/tweeters" {body :body} (response (db/add-or-update-tweeter body)))
   (GET "/areas" [] (response areas))
-  (POST "/events" {body :body} (db/add-event body))
+  (POST "/events" {body :body}  (response (db/add-event body)))
+  (DELETE "/events/:id" [id]  (response (db/remove-event id)))
+  (POST "/replies" {body :body} (response (db/add-reply body)))
+  (GET "/replies/:id" [id] (response (db/get-reply id)))
+  (DELETE "/replies/:id" [id] (response (db/remove-reply id)))
   (ANY "*" [] (response {:message "404"})))
 
 (def app
